@@ -1,5 +1,8 @@
 export default {
-    primary: "#2c205c",
-    inactive: "#6f43ee",
-    secondary: "#ff005a"
+    primary_color: "#2c205c",
+    primary_color_inverse: "#ffffff",
+    secondary_color: "#ff005a",
+    secondary_color_inverse: "#ffffff",
+    inactive_Color: "#6f43ee",
+    error_color: "#6f140a"
 }

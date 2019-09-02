@@ -1,13 +1,21 @@
 const initialState = {
-    loading: "default"
+    token: null,
+    user: null
 }
 
 export default (state = initialState, action) => {
 
-    if (action.type == "loader") {
+    if (action.type == "token") {
         return {
             ...state,
-            loading: action.title
+            token: action.token
+        }
+    }
+
+    if (action.type == "user") {
+        return {
+            ...state,
+            user: action.user
         }
     }
 

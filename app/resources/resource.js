@@ -1,12 +1,13 @@
 export default class Resource {
 
-    constructor(axios) {
+    constructor(axios, store) {
         this.axios = axios;
+        this.store = store;
     }
 
     get(path = "/", params, headers = {}) {
         return this.promise(
-            this.axios.get(this.name + path, {params, headers})
+            this.axios.get('https://cmsjs.dotdev.ae/api'+ "/" + this.name + path, {params, headers})
         );
     }
 
@@ -46,7 +47,9 @@ export default class Resource {
                         resolve(response.data.data);
                     }
                 }
+
             }).catch(error => {
+
                 if(error.response){
                     reject(error.response.data.errors);
                 }else{

@@ -1,23 +1,18 @@
 const initialState = {
-    token: null,
-    user: false
+    locale: "en",
+    direction: "ltr"
 }
 
 export default (state = initialState, action) => {
 
-    if (action.type == "token") {
+    if (action.type == "locale") {
         return {
             ...state,
-            token: action.token
-        }
-    }
-
-    if (action.type == "user") {
-        return {
-            ...state,
-            user: action.user
+            locale: action.locale,
+            direction: action.locale == "ar" ? "rtl" : "ltr"
         }
     }
 
     return state;
 }
+

@@ -9,16 +9,15 @@ import Home from "app/screens/Home";
 import Posts from "app/screens/Posts";
 import Login from "app/screens/Login";
 import {Ionicons} from "@expo/vector-icons";
-import Colors from 'app/constants/colors';
+import {Theme} from 'app/constants';
 import Drawer from 'app/components/Drawer';
-
 
 const StackNavigationOptions = {
     headerTintColor: "white",
 
     headerStyle:
         {
-            backgroundColor: Colors.primary,
+            backgroundColor: Theme.primary_color,
         }
 }
 
@@ -64,24 +63,20 @@ const TabsNavigator = createBottomTabNavigator({
 }, {
 
     tabBarOptions: {
-
-        style: {
-            backgroundColor: Colors.primary
-        },
-
+        style: {backgroundColor: Theme.primary_color},
         showLabel: false,
-        inactiveTintColor: Colors.inactive,
+        inactiveTintColor: Theme.inactive_Color,
         activeTintColor: "white"
-
     }
 });
 
 const MainAppNavigator = createStackNavigator({
     Tabs: TabsNavigator,
-    Login: Login
+    Login,
 }, {
     mode: "modal",
     headerMode: "none"
+
 });
 
 const drawer = createDrawerNavigator({
@@ -111,7 +106,7 @@ const drawer = createDrawerNavigator({
     hideStatusBar: false,
     contentOptions: {
         activeTintColor: 'white',
-        activeBackgroundColor: Colors.primary,
+        activeBackgroundColor: Theme.primary_color,
         itemsContainerStyle: {
             marginVertical: 0,
             backgroundColor:"white",

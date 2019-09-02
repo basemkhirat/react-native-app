@@ -1,73 +1,78 @@
 import React from 'react';
-import {Button, Picker, StyleSheet, Text, View} from 'react-native';
-import {I18nManager} from 'react-native';
+import {View, Text} from 'react-native';
+import {Button} from "app/elements";
+import {HeaderButtons, Item} from "react-navigation-header-buttons";
+import HeaderButton from 'app/components/HeaderButton';
+import {connect} from 'react-redux';
+import Resource from 'app/resources';
+import {store} from 'app/services/store';
 
-export default class extends React.Component {
+class Home extends React.Component {
 
-    static navigationOptions = {
-        title: 'Home 2'
+    state = {}
+
+    static navigationOptions = (nav) => {
+
+        return {
+
+            title: "Home",
+
+            headerLeft: () => {
+                return (
+                    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                        <Item
+                            title="Favorite"
+                            iconName="ios-menu"
+                            onPress={() => nav.navigation.toggleDrawer()}
+                        />
+                    </HeaderButtons>
+                );
+            }
+        }
     };
 
-    constructor() {
-        super();
-        this.state = {
-            name: "hiiii default",
-            language: "java"
-        }
+    componentDidMount() {
+      //  setTimeout(() => {
+         //   store.dispatch({type: "locale", locale: "ar"});
+      //  }, 5000);
     }
+
+
+    changeLocale(locale) {
+        store.dispatch({type: "locale", locale: locale});
+    }
+
 
     render() {
 
+        //console.log(this.props.state);
+
         return (
-
             <View>
+                <Text> { this.props.locale }</Text>
+                <Text> { this.props.direction }</Text>
 
-                <Text style={{textAlign: "right"}}> Hi this is a sample text </Text>
 
-                <Button style={styles.button} title={this.state.language}
-                        //onPress={() => this.props.navigation.navigate("Login", {title: this.state.language})}/>
-                        onPress={() => I18nManager.forceRTL(true)} />
 
-                <Picker
+                {/*<Text> { this.props.user ? this.props.user.email : "no user" }</Text>*/}
 
-                    selectedValue={this.state.language}
-                    style={{height: 50, width: 100}}
-                    onValueChange={(itemValue, itemIndex) =>
-                        this.setState({language: itemValue})
-                    }>
-                    <Picker.Item label="Java" value="java"/>
-                    <Picker.Item label="JavaScript" value="js"/>
-                </Picker>
 
-                {/*<Button style={styles.button} title={this.state.name} onPress={() => this.props.navigation.navigate("Login", {title: "Dfa"})}/>*/}
+                <Button title="en" onPress={() => this.changeLocale('en')} />
+                <Button title="ar" onPress={() => this.changeLocale('ar')} />
 
-                {/*<TextInput*/}
-                {/*    style={styles.input}*/}
-                {/*    autoCapitalize="none"*/}
-                {/*    value={this.state.name}*/}
-                {/*    onChangeText={(xxx) => this.setState({name: xxx})}*/}
-                {/*    placeholder="enter your name" />*/}
+                <Button title="Login now" onPress={() => this.props.navigation.navigate("Login")}/>
             </View>
-
         );
-    }
 
+    }
 }
 
-const styles = StyleSheet.create({
-
-    input: {
-        borderWidth: 1,
-        borderColor: "#cccccc",
-        height: 30,
-        padding: 5,
-
-    },
-
-    button: {
-        borderWidth: 4,
-        borderColor: "#cccccc",
-        marginTop: "10",
-        height: 50
+export default connect(state => {
+    return {
+        state: state,
+        user: state.auth.user,
+        token: state.auth.token,
+        locale: state.app.locale,
+        direction: state.app.direction
     }
-})
+})(Home);
