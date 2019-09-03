@@ -6,6 +6,7 @@ import styles from 'app/styles/auth';
 import I18n from 'app/services/I18n';
 import Resource from 'app/resources';
 import {store} from 'app/services/store';
+import {I18nManager} from "react-native-web";
 
 class Login extends React.Component {
 
@@ -74,6 +75,8 @@ class Login extends React.Component {
 
                 </Animated.View>
 
+                <Text>{ I18nManager.isRTL ? "yes" : "no" }</Text>
+
                 <Animated.View style={[styles.form, {transform: [{translateY: this.state.form_translate_y}]}]}>
 
                     <TextInput value={this.state.user.email}
@@ -118,7 +121,8 @@ class Login extends React.Component {
 export default connect(state => {
     return {
         token: state.auth.token,
-        user: state.auth.user
+        user: state.auth.user,
+        direction: state.app.direction
     };
 })(Login);
 

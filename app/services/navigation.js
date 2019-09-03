@@ -11,14 +11,12 @@ import Login from "app/screens/Login";
 import {Ionicons} from "@expo/vector-icons";
 import {Theme} from 'app/constants';
 import Drawer from 'app/components/Drawer';
+import {I18nManager} from "react-native";
+
 
 const StackNavigationOptions = {
     headerTintColor: "white",
-
-    headerStyle:
-        {
-            backgroundColor: Theme.primary_color,
-        }
+    headerStyle: {backgroundColor: Theme.primary_color}
 }
 
 const MainStackNavigator = createStackNavigator({
@@ -99,7 +97,7 @@ const drawer = createDrawerNavigator({
         }
     }
 }, {
-    drawerPosition: "left",
+    drawerPosition: I18nManager.isRTL ? "right" : "left",
     contentComponent: Drawer,
     drawerBackgroundColor: "white",
     drawerType: "slide",
@@ -109,7 +107,7 @@ const drawer = createDrawerNavigator({
         activeBackgroundColor: Theme.primary_color,
         itemsContainerStyle: {
             marginVertical: 0,
-            backgroundColor:"white",
+            backgroundColor: "white",
             flex: 1,
             alignItems: "stretch",
             height: "100%",

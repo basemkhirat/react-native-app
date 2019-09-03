@@ -1,45 +1,43 @@
 import React from 'react';
+import {I18nManager, StatusBar} from 'react-native';
 import {useScreens} from 'react-native-screens'
 import {persistor, store} from 'app/services/store';
 import Navigation from 'app/services/navigation';
-import {Provider} from 'react-redux';
-import {StatusBar, Text, View} from 'react-native';
+import {connect, Provider} from 'react-redux';
 import {AppLoading} from "expo";
 import {PersistGate} from 'redux-persist/integration/react';
-require("app/services/I18n");
-
-
-
-
+import I18n from 'app/services/I18n';
+import {Updates} from 'expo';
 
 useScreens();
-console.log(store.getState().app.locale);
-export default class App extends React.Component {
+
+class App extends React.Component {
 
     state = {
         ready: false
     };
 
-
-
-
-    constructor(props){
+    constructor(props) {
         super(props);
-        console.log(store.getState().app.locale);
     }
-
 
     async boot() {
         return await new Promise((resolve => {
+
+            I18n.setLocale(store.getState().app.locale);
+
+            let store_direction = store.getState().app.direction;
+            let native_direction = I18nManager.isRTL ? "rtl" : "ltr";
+
+            if (native_direction != store_direction) {
+                Updates.reload();
+            }
+
             resolve();
-        }))
+        }));
     }
 
     render() {
-
-        // setTimeout(() => {
-        //     RNRestart.Restart();
-        // }, 3000)
 
         if (!this.state.ready) {
             return (
@@ -55,7 +53,6 @@ export default class App extends React.Component {
             <Provider store={store}>
                 <PersistGate persistor={persistor}>
                     <StatusBar barStyle="light-content"/>
-                    {/*<Text>{ store.getState().app.locale }</Text>*/}
                     <Navigation/>
                 </PersistGate>
             </Provider>
@@ -63,3 +60,5 @@ export default class App extends React.Component {
     }
 
 }
+
+export default App;
