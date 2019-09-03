@@ -14,7 +14,6 @@ export default (props) => {
 
 const styles = StyleSheet.create({
     input: {
-        padding: 8,
-        fontSize: 16
+        padding: 8
     }
 })

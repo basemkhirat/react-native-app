@@ -4,5 +4,7 @@ export default {
     secondary_color: "#ff005a",
     secondary_color_inverse: "#ffffff",
     inactive_Color: "#6f43ee",
-    error_color: "#6f140a"
+    success_color: "green",
+    error_color: "#6f140a",
+    warning_color: "yellow"
 }

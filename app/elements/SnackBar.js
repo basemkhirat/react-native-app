@@ -4,8 +4,15 @@ import {Theme} from "app/constants";
 
 class SnackBar extends React.Component {
 
+    types = {
+        success: Theme.success_color,
+        error: Theme.error_color,
+        warning: Theme.warning_color
+    }
+
     state = {
-        visible: false
+        visible: false,
+
     }
 
     componentDidMount() {
@@ -24,8 +31,17 @@ class SnackBar extends React.Component {
 
     render() {
 
+        let default_container_style = {...styles.container};
+
+        if (this.props.type) {
+            default_container_style.backgroundColor = this.types[this.props.type];
+        }else{
+            default_container_style.backgroundColor = "#000000";
+        }
+
         return (
-            <View {...this.props} style={[this.props.style, styles.container, {opacity: this.state.visible ? 1 : 0}]}>
+            <View {...this.props}
+                  style={[this.props.style, default_container_style, {opacity: this.state.visible ? 1 : 0}]}>
                 <Text style={[this.props.textStyle, styles.text]}>
                     {this.props.children}
                 </Text>
@@ -45,13 +61,14 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: "center",
         paddingHorizontal: 10,
-        backgroundColor: Theme.error_color,
+       // backgroundColor: "#000000",
         borderRadius: 5
     },
 
 
     text: {
-        color: "white"
+        color: "white",
+        textAlign: "left"
     }
 });
 

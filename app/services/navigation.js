@@ -8,6 +8,10 @@ import {
 import Home from "app/screens/Home";
 import Posts from "app/screens/Posts";
 import Login from "app/screens/Login";
+import Register from "app/screens/Register";
+import Verify from "app/screens/Verify";
+import Forget from "app/screens/Forget";
+import Reset from "app/screens/Reset";
 import {Ionicons} from "@expo/vector-icons";
 import {Theme} from 'app/constants';
 import Drawer from 'app/components/Drawer';
@@ -71,6 +75,10 @@ const TabsNavigator = createBottomTabNavigator({
 const MainAppNavigator = createStackNavigator({
     Tabs: TabsNavigator,
     Login,
+    Register,
+    Verify,
+    Forget,
+    Reset
 }, {
     mode: "modal",
     headerMode: "none"
@@ -114,7 +122,7 @@ const drawer = createDrawerNavigator({
 
         },
         iconContainerStyle: {
-            opacity: .4
+            opacity: 0.4
         }
     }
 })

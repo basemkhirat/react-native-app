@@ -36,8 +36,7 @@ export default StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#cccccc",
         color: "#cccccc",
-        marginVertical: 10,
-        // textAlign: "right"
+        marginVertical: 10
     },
 
     loading_button: {
@@ -66,13 +65,11 @@ export default StyleSheet.create({
     },
 
     first: {
-        color: Theme.secondary_color,
-        fontSize: 16
+        color: Theme.secondary_color
     },
 
     second: {
-        color: Theme.secondary_color,
-        fontSize: 16
+        color: Theme.secondary_color
     },
 
     error: {

@@ -5,11 +5,12 @@ import styles from 'app/styles/auth';
 import I18n from 'app/services/I18n';
 import Resource from 'app/resources';
 
-export default class Login extends React.Component {
+export default class Verify extends React.Component {
 
     state = {
         loading: false,
-        user: {email: "", password: ""},
+        code: "",
+        password: "",
         error: null,
         form_translate_y: new Animated.Value(50),
         brand_translate_y: new Animated.Value(-50)
@@ -26,14 +27,14 @@ export default class Login extends React.Component {
         ]).start();
     }
 
-    login() {
+    reset() {
 
         this.setState({loading: true});
 
-        Resource.auth.login(this.state.user)
+        Resource.auth.post('/reset', {code: this.state.code, password: this.state.password})
             .then((user) => {
                 this.setState({error: null});
-                this.props.navigation.navigate("Home");
+                this.props.navigation.replace("Login");
             })
             .catch(error => {
                 this.setState({error: error[0]});
@@ -56,25 +57,20 @@ export default class Login extends React.Component {
                         <Image resizeMode="contain" style={styles.logo} source={require("app/assets/icon.png")}/>
                     </TouchableOpacity>
 
-                    <Text style={styles.title}> {I18n.t('login')} </Text>
+                    <Text style={styles.title}> {I18n.t('reset_password')} </Text>
 
                 </Animated.View>
 
                 <Animated.View style={[styles.form, {transform: [{translateY: this.state.form_translate_y}]}]}>
 
-                    <TextInput value={this.state.user.email}
-                               onChangeText={email => this.setState({user: {...this.state.user, email: email}})}
-                               placeholder="me@example.com"
+                    <TextInput defaultValue={this.state.code}
+                               onChangeText={code => this.setState({code})}
+                               placeholder={I18n.t('verification_code')}
                                style={styles.input}
                     />
 
-                    <TextInput value={this.state.user.password}
-                               onChangeText={password => this.setState({
-                                   user: {
-                                       ...this.state.user,
-                                       password: password
-                                   }
-                               })}
+                    <TextInput value={this.state.password}
+                               onChangeText={password => this.setState({password})}
                                placeholder={I18n.t("password")}
                                secureTextEntry={true}
                                style={styles.input}
@@ -82,7 +78,8 @@ export default class Login extends React.Component {
 
                     <View style={styles.loading_button}>
                         {this.state.loading ? <ActivityIndicator size="small" color="white"/> :
-                            <Button title={I18n.t('login')} style={styles.button} onPress={this.login.bind(this)}/>}
+                            <Button title={I18n.t('change_password')} style={styles.button}
+                                    onPress={this.reset.bind(this)}/>}
                     </View>
 
                     <View style={styles.links}>
@@ -96,6 +93,10 @@ export default class Login extends React.Component {
                     </View>
 
                 </Animated.View>
+
+                <SnackBar type="success" visible={true}>
+                    {I18n.t("password_reset_code_sent")}
+                </SnackBar>
 
                 <SnackBar type="error" visible={this.state.error ? true : false}>
                     {this.state.error}

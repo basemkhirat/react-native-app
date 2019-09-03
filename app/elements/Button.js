@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     },
     text: {
         textAlign: "center",
-        fontSize: 17,
+
         color: Theme.primary_color_inverse
     }
 });

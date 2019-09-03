@@ -3,5 +3,18 @@ export default {
     email: "Email",
     password: 'Password',
     new_user: "New user",
-    forget_password: "Forget password"
+    forget_password: "Forget password",
+    already_have_account: "Already have account",
+    register: "Register",
+    register_now: "Register Now",
+    first_name: "First name",
+    last_name: "Last name",
+    verify_my_email: "Verify my email",
+    verification_code: "Verification code",
+    check_now: "Check Now",
+    email_verification_code_sent: "Please check your mail inbox to get email verification code and activate your account",
+    send_password_change_request: "Send a password change request",
+    change_password: "Change password",
+    password_reset_code_sent: "Please check your mail inbox to get password reset code",
+    reset_password: "Reset my password"
 };
