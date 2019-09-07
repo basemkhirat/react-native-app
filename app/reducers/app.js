@@ -1,6 +1,6 @@
 const initialState = {
     locale: "en",
-    direction: "ltr"
+    isRTL: false
 }
 
 export default (state = initialState, action) => {
@@ -9,10 +9,11 @@ export default (state = initialState, action) => {
         return {
             ...state,
             locale: action.locale,
-            direction: action.locale == "ar" ? "rtl" : "ltr"
+            isRTL: action.locale == "ar" ? true : false
         }
     }
 
     return state;
 }
+
 

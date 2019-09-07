@@ -6,6 +6,9 @@ import {
     createStackNavigator
 } from 'react-navigation';
 import Home from "app/screens/Home";
+import Settings from "app/screens/Settings";
+import MainSettings from "app/screens/MainSettings";
+import Profile from "app/screens/Profile";
 import Posts from "app/screens/Posts";
 import Login from "app/screens/Login";
 import Register from "app/screens/Register";
@@ -24,8 +27,11 @@ const StackNavigationOptions = {
 }
 
 const MainStackNavigator = createStackNavigator({
+        Settings: Settings,
         Home: Home,
-        Posts: Posts
+
+        MainSettings: MainSettings,
+        Profile: Profile,
     },
     {
         defaultNavigationOptions: {

@@ -16,6 +16,12 @@ export default {
     send_password_change_request: "إرسال",
     change_password: "تغيير كلمة المرور",
     password_reset_code_sent: "برجاء فحص بريدك الإلكتروني لمعرفة كود التحقق الخاص بك",
-    reset_password: "تغيير كلمة المرور"
+    reset_password: "تغيير كلمة المرور",
+    welcome: "مرحباً",
+    edit_profile: "تعديل بياناتي",
+    guest: "",
+    general_settings: "الإعدادات العامة",
+    logout: "تسجيل الخروج",
+    language: "اللغة"
 };
 

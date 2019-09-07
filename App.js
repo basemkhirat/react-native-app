@@ -3,11 +3,10 @@ import {I18nManager, StatusBar} from 'react-native';
 import {useScreens} from 'react-native-screens'
 import {persistor, store} from 'app/services/store';
 import Navigation from 'app/services/navigation';
-import {connect, Provider} from 'react-redux';
-import {AppLoading} from "expo";
+import {Provider} from 'react-redux';
+import {AppLoading, Updates} from "expo";
 import {PersistGate} from 'redux-persist/integration/react';
 import I18n from 'app/services/I18n';
-import {Updates} from 'expo';
 
 useScreens();
 
@@ -17,25 +16,22 @@ class App extends React.Component {
         ready: false
     };
 
-    constructor(props) {
-        super(props);
-    }
-
-    async boot() {
-        return await new Promise((resolve => {
+    boot() {
+        return new Promise(resolve => {
 
             I18n.setLocale(store.getState().app.locale);
 
-            let store_direction = store.getState().app.direction;
-            let native_direction = I18nManager.isRTL ? "rtl" : "ltr";
+            setTimeout(() => {
+                if (store.getState().app.isRTL != I18nManager.isRTL) {
+                    Updates.reload();
+                }
 
-            if (native_direction != store_direction) {
-                Updates.reload();
-            }
+                resolve();
+            }, 3000)
 
-            resolve();
-        }));
+        });
     }
+
 
     render() {
 

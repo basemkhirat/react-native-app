@@ -5,6 +5,7 @@ export default (props) => {
     return (
         <TextInput
             autoCapitalize="none"
+            autoCorrect={false}
             placeholderTextColor="#cccccc"
             {...props}
             style={[styles.input, props.style]}

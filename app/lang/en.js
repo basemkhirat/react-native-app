@@ -16,5 +16,14 @@ export default {
     send_password_change_request: "Send a password change request",
     change_password: "Change password",
     password_reset_code_sent: "Please check your mail inbox to get password reset code",
-    reset_password: "Reset my password"
+    reset_password: "Reset my password",
+    welcome: "Welcome",
+    edit_profile: "Edit Profile",
+    guest: "Guest",
+    general_settings: "General Settings",
+    logout: "Logout",
+    language: "Language",
+    change_avatar: "Change avatar",
+    save: "Save",
+    notification: "Notification"
 };

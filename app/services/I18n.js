@@ -12,6 +12,8 @@ i18n.setLocale = (locale) => {
     I18nManager.forceRTL(locale == "ar" ? true : false);
 }
 
+
+
 export default i18n;
 
 
