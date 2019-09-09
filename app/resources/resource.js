@@ -7,7 +7,7 @@ export default class Resource {
 
     get(path = "/", params, headers = {}) {
         return this.promise(
-            this.axios.get('https://cmsjs.dotdev.ae/api'+ "/" + this.name + path, {params, headers})
+            this.axios.get(this.name + path, {params, headers})
         );
     }
 

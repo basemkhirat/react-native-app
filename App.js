@@ -21,17 +21,13 @@ class App extends React.Component {
 
             I18n.setLocale(store.getState().app.locale);
 
-            setTimeout(() => {
-                if (store.getState().app.isRTL != I18nManager.isRTL) {
-                    Updates.reload();
-                }
+            if (store.getState().app.isRTL != I18nManager.isRTL) {
+                Updates.reload();
+            }
 
-                resolve();
-            }, 3000)
-
+            resolve();
         });
     }
-
 
     render() {
 

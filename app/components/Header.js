@@ -39,7 +39,10 @@ export const Center = (props) => {
     return (
         <View style={styles.center}>
             {props.children ? props.children :
-                <Image resizeMode="cover" style={{width: 50, height: 50}} source={require("app/assets/icon.png")}/>}
+                <TouchableOpacity onPress={() => props.navigation.navigate("Home")}>
+                    <Image resizeMode="cover" style={{width: 50, height: 50}} source={require("app/assets/icon.png")}/>
+                </TouchableOpacity>
+            }
         </View>
     );
 }

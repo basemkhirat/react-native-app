@@ -25,5 +25,11 @@ export default {
     language: "Language",
     change_avatar: "Change avatar",
     save: "Save",
-    notification: "Notification"
+    notifications: "Notifications",
+    push_notifications_not_granted: "Push notifications is not granted",
+    profile_saved: "Profile saved successfully",
+    camera_roll_permission_needed: "Camera Roll permission needed",
+    login_with_facebook: "Login with Facebook",
+    login_with_google: "Login with Google",
+    or_login_with_email: "Or login with your email address"
 };

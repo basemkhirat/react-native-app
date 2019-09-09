@@ -4,7 +4,7 @@ import {Header, Right} from 'app/components/Header';
 import {connect} from 'react-redux';
 import I18n from 'app/services/I18n';
 import SettingItem from 'app/components/SettingItem';
-import {Button, TextInput} from "app/elements";
+import {ActivityIndicator, Button, SnackBar, TextInput} from "app/elements";
 import {Theme} from "app/constants";
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -19,19 +19,13 @@ class Profile extends React.Component {
             last_name: this.props.user.last_name,
             photo_payload: ""
         },
-        error: null
+        error: null,
+        message: null
     }
 
     static navigationOptions = (nav) => {
-
-        let rightComponent = (
-            <Right>
-                <Button style={{paddingHorizontal: 10}} title={I18n.t("save")} onPress={() => this.save()}/>
-            </Right>
-        );
-
         return {
-            header: <Header {...nav} hasBack={true} right={rightComponent}/>
+            header: <Header {...nav} hasBack={true}/>
         }
     };
 
@@ -42,7 +36,7 @@ class Profile extends React.Component {
     getPermissionAsync = async () => {
         const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL);
         if (status !== 'granted') {
-            alert('Sorry, we need camera roll permissions to make this work!');
+            alert(I18n.t('camera_roll_permission_needed'));
         }
     }
 
@@ -71,25 +65,26 @@ class Profile extends React.Component {
         }
 
         if (this.props.user.photo) {
-            return <Image source={{uri: this.props.user.photo.thumbnails.medium}}
+            return <Image source={{uri: this.props.user.photo.thumbnails.default}}
                           style={styles.form_avatar_image}/>;
         } else {
             return <Image source={require("app/assets/user.jpg")} style={styles.form_avatar_image}/>;
         }
-
     }
 
     save() {
 
-        alert("called");
+        this.setState({loading: true});
 
-        console.log(this.state.user);
+        this.setState({error: null});
+        this.setState({message: null});
 
-        Resource.user.put("/"+ this.props.user.id, this.state.user)
+        Resource.user.put("/" + this.props.user.id, this.state.user)
             .then(user => {
                 this.setState({error: null});
-                alert("saved");
-               // this.props.navigation.replace("Verify");
+                Resource.auth.user().then(() => {
+                    this.setState({message: I18n.t('profile_saved')});
+                })
             })
             .catch(error => {
                 this.setState({error: error[0]});
@@ -103,24 +98,22 @@ class Profile extends React.Component {
     render() {
 
         return (
-            <View>
+
+            <View style={styles.wrapper}>
 
                 <View style={styles.form_avatar_container}>
 
-
                     {this.renderAvatar()}
-
 
                     <TouchableOpacity style={styles.change_avatar}
                                       onPress={() => this.pickImage()}>
                         <Text style={styles.change_avatar_text}>{I18n.t('change_avatar')}</Text>
                     </TouchableOpacity>
 
-
                 </View>
 
-                <SettingItem title={I18n.t("first_name")} icon="md-person">
-                    <TextInput value={this.props.user.first_name}
+                <SettingItem title={I18n.t("first_name")}>
+                    <TextInput defaultValue={this.props.user.first_name}
                                onChangeText={first_name => this.setState({
                                    user: {
                                        ...this.state.user,
@@ -131,8 +124,8 @@ class Profile extends React.Component {
                     />
                 </SettingItem>
 
-                <SettingItem title={I18n.t("last_name")} icon="md-person">
-                    <TextInput value={this.props.user.last_name}
+                <SettingItem title={I18n.t("last_name")}>
+                    <TextInput defaultValue={this.props.user.last_name}
                                onChangeText={last_name => this.setState({
                                    user: {
                                        ...this.state.user,
@@ -144,8 +137,18 @@ class Profile extends React.Component {
                     />
                 </SettingItem>
 
-                <Button style={{paddingHorizontal: 10}} title={I18n.t("save")} onPress={() => this.save()}/>
+                <View style={styles.submitter}>
+                    {this.state.loading ? <ActivityIndicator/> :
+                        <Button style={styles.button} title={I18n.t("save")} onPress={() => this.save()}/>}
+                </View>
 
+                <SnackBar type="error" visible={this.state.error ? true : false}>
+                    {this.state.error}
+                </SnackBar>
+
+                <SnackBar type="success" visible={this.state.message ? true : false}>
+                    {this.state.message}
+                </SnackBar>
 
             </View>
         );
@@ -153,6 +156,11 @@ class Profile extends React.Component {
 }
 
 const styles = StyleSheet.create({
+
+    wrapper: {
+        flex: 1,
+        alignItems: "center"
+    },
 
     change_avatar: {
         marginTop: 15
@@ -172,6 +180,16 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 50
+    },
+
+    submitter: {
+        justifyContent: "center",
+        alignItems: "center",
+        height: 60
+    },
+
+    button: {
+        width: 200
     }
 })
 

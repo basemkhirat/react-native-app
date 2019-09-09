@@ -27,9 +27,8 @@ const StackNavigationOptions = {
 }
 
 const MainStackNavigator = createStackNavigator({
-        Settings: Settings,
         Home: Home,
-
+        Settings: Settings,
         MainSettings: MainSettings,
         Profile: Profile,
     },
@@ -79,8 +78,9 @@ const TabsNavigator = createBottomTabNavigator({
 });
 
 const MainAppNavigator = createStackNavigator({
-    Tabs: TabsNavigator,
     Login,
+    Tabs: TabsNavigator,
+
     Register,
     Verify,
     Forget,

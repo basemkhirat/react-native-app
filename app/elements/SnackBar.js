@@ -40,12 +40,15 @@ class SnackBar extends React.Component {
         }
 
         return (
-            <View {...this.props}
-                  style={[this.props.style, default_container_style, {opacity: this.state.visible ? 1 : 0}]}>
-                <Text style={[this.props.textStyle, styles.text]}>
-                    {this.props.children}
-                </Text>
+            <View style={styles.wrapper}>
+                <View {...this.props}
+                      style={[this.props.style, default_container_style, {opacity: this.state.visible ? 1 : 0}]}>
+                    <Text style={[this.props.textStyle, styles.text]}>
+                        {this.props.children}
+                    </Text>
+                </View>
             </View>
+
         );
 
     }
@@ -53,18 +56,21 @@ class SnackBar extends React.Component {
 
 const styles = StyleSheet.create({
 
-    container: {
+    wrapper: {
+        justifyContent: "center",
+        alignItems: "center",
         position: "absolute",
-        bottom: 0,
         bottom: 40,
+        width: "100%"
+    },
+
+    container: {
         width: "90%",
         height: 40,
         justifyContent: "center",
         paddingHorizontal: 10,
-       // backgroundColor: "#000000",
         borderRadius: 5
     },
-
 
     text: {
         color: "white",

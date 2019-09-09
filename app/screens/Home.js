@@ -7,6 +7,9 @@ import {Updates} from 'expo';
 import {Header, Left, Right, Item} from 'app/components/Header';
 import RNPickerSelect from 'react-native-picker-select';
 
+import Resource from 'app/resources';
+
+
 class Home extends React.Component {
 
     static navigationOptions = (nav) => {
@@ -33,12 +36,29 @@ class Home extends React.Component {
         Updates.reload();
     }
 
+     facebook(){
+
+         Resource.auth.loginByFacebook().then(data => {
+             console.log(data);
+         }).catch(error => {
+             console.log(error);
+         })
+
+        // Resource.auth.loginByGoogle().then(data => {
+        //     console.log(data);
+        // }).catch(error => {
+        //     console.log(error);
+        // })
+    }
+
+
+
     render() {
 
         return (
             <View>
 
-                <Text>{ this.props.locale }</Text>
+                <Text onPress={this.facebook}>{ this.props.locale }</Text>
 
 
 

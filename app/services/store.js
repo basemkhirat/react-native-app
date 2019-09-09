@@ -5,7 +5,7 @@ import {persistReducer, persistStore} from "redux-persist";
 import {AsyncStorage} from 'react-native';
 
 const persistConfig = {
-    key: "data",
+    key: "datax",
     storage: AsyncStorage
 };
 

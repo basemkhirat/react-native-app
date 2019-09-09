@@ -5,6 +5,7 @@ import SnackBar from './SnackBar';
 import Icon from './Icon';
 import Picker from './Picker';
 import Switch from './Switch';
+import ActivityIndicator from './ActivityIndicator';
 
 export {
     ScrollView,
@@ -13,5 +14,6 @@ export {
     SnackBar,
     Icon,
     Picker,
-    Switch
+    Switch,
+    ActivityIndicator
 }

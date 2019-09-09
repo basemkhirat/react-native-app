@@ -20,6 +20,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function (request) {
 
+
+    //console.log(store.getState().auth.token);
     request.headers["Authorization"] = "Bearer " + store.getState().auth.token;
     request.headers["accept-language"] = store.getState().app.locale;
 
@@ -32,6 +34,8 @@ instance.interceptors.request.use(function (request) {
     if (request.params) {
         payload = request.params;
     }
+
+    console.log("Request: " + request.method.toUpperCase() + " " + request.url, JSON.stringify(payload), JSON.stringify(request.headers));
 
     return request;
 });

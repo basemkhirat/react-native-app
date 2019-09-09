@@ -22,6 +22,15 @@ export default {
     guest: "",
     general_settings: "الإعدادات العامة",
     logout: "تسجيل الخروج",
-    language: "اللغة"
+    language: "اللغة",
+    change_avatar: "تغيير الصورة",
+    save: "حفظ",
+    notifications: "الإشعارات",
+    push_notifications_not_granted: "الإشعارات غير مسموح بها",
+    profile_saved: "تم حفظ البيانات",
+    camera_roll_permission_needed: "غير مسموح بتصفح الإلبومات",
+    login_with_facebook: "تسجيل الدخول بالفيسبوك",
+    login_with_google: "تسجيل الدخول بجوجل",
+    or_login_with_email: "أو سجل الدخول ببريد إلكتروني مسجل"
 };
 

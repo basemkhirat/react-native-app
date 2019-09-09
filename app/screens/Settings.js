@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     profile: {
         backgroundColor: Theme.primary_color,
         height: 100,
-        flexDirection: "row"
+        flexDirection: "row",
+        marginBottom: 20
     },
 
     avatar: {

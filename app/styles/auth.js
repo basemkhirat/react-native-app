@@ -18,7 +18,9 @@ export default StyleSheet.create({
 
     logo: {
         width: 100,
-        height: 100
+        height: 100,
+        borderRadius: 50,
+        marginVertical: 5
     },
 
     title: {
@@ -77,6 +79,57 @@ export default StyleSheet.create({
         alignItems: "center",
         color: "blue",
 
+    },
+
+    facebook_button: {
+        flexDirection: "row",
+
+        backgroundColor: "#4267b2",
+        paddingVertical:5,
+        height: 40,
+        borderRadius: 5,
+        marginBottom: 10
+    },
+
+    facebook_button_text: {
+        marginHorizontal: 10,
+        color: "#ffffff",
+        flex: 1,
+        textAlign: "center"
+    },
+
+    facebook_button_icon: {
+        color: "#ffffff",
+        marginHorizontal:10
+    },
+
+    google_button: {
+        flexDirection: "row",
+        justifyContent: "center",
+        backgroundColor: "#db3e29",
+        paddingVertical:5,
+        height: 40,
+        borderRadius: 5,
+        marginBottom: 10
+    },
+
+    google_button_text: {
+        marginHorizontal: 10,
+        color: "#ffffff",
+        flex: 1,
+        textAlign: "center"
+    },
+
+    google_button_icon: {
+        color: "#ffffff",
+        marginHorizontal:10
+    },
+
+    form_separator: {
+        textAlign: "center",
+        color: "#f5f5f5",
+        marginVertical: 20
     }
 });
+
 

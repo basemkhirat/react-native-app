@@ -3,12 +3,11 @@ import {StyleSheet, Text, TouchableOpacity} from "react-native";
 import {Theme} from 'app/constants';
 
 export default (props) => {
+
+    let content = props.title ? (<Text style={styles.text}>{props.title}</Text>) : props.children;
+
     return (
-        <TouchableOpacity {...props} style={[styles.container, props.style]}>
-            <Text style={styles.text}>
-                {props.title}
-            </Text>
-        </TouchableOpacity>
+        <TouchableOpacity {...props} style={[styles.container, props.style]}>{content}</TouchableOpacity>
     );
 }
 
