@@ -1,20 +1,58 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Header} from 'app/components/Header';
+import {StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
 import {Theme} from 'app/constants';
 import {Icon} from 'app/elements';
 import I18n from 'app/services/I18n';
 import SettingItem from 'app/components/SettingItem';
 import Resource from 'app/resources';
+import Logo from 'app/components/icons/Settings';
+import s from "app/styles/page";
+
 
 class Settings extends React.Component {
 
     static navigationOptions = (nav) => {
         return {
-            header: <Header {...nav} hasBack={true}/>
+            tabBarLabel: "الإعدادات",
+            tabBarIcon: ({tintColor}) => {
+                return (
+                    <Logo color={tintColor}></Logo>
+                );
+            }
         }
-    };
+    }
+
+    _render_settings = () => {
+
+        let {user} = this.props;
+
+        return (
+            <View>
+
+                <SettingItem title="عن التطبيق" icon="md-at"
+                             onPress={() => this.props.navigation.navigate('About')}/>
+
+                {
+                    user ? (
+                            <React.Fragment>
+                                <SettingItem title={I18n.t("edit_profile")} icon="md-contact"
+                                             onPress={() => this.props.navigation.navigate('Profile')}/>
+
+                                <SettingItem title={I18n.t("logout")} icon="ios-log-out"
+                                             onPress={() => {
+                                                 this.props.navigation.navigate("Login");
+                                                 Resource.auth.logout();
+                                             }}/>
+                            </React.Fragment>
+                        )
+                        : null
+                }
+
+            </View>
+        );
+
+    }
 
     _render_profile = () => {
 
@@ -27,11 +65,8 @@ class Settings extends React.Component {
                         <Icon name="md-contact" size={49} color="white"/>
                     </View>
                     <View style={styles.welcome}>
-                        <Text style={styles.welcome_title}>{I18n.t('welcome')} {user.name} !</Text>
-                        <TouchableOpacity style={styles.welcome_action}
-                                          onPress={() => this.props.navigation.navigate('Profile')}>
-                            <Text style={styles.welcome_action_text}>{I18n.t('edit_profile')}</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.welcome_title}>{I18n.t('welcome')} {user.first_name} !</Text>
+
                     </View>
                 </View>
             );
@@ -57,17 +92,17 @@ class Settings extends React.Component {
     }
 
     render() {
-
-        let {user} = this.props;
-
         return (
+            <View style={s.container}>
 
-            <View>
-                {this._render_profile()}
-                <SettingItem title={I18n.t("general_settings")} icon="ios-settings"
-                             onPress={() => this.props.navigation.navigate("MainSettings")}/>
-                {user ? <SettingItem title={I18n.t("logout")} icon="ios-log-out"
-                                     onPress={() => Resource.auth.logout()}/> : null}
+                <View style={s.page}>
+                    <StatusBar barStyle="light-content"/>
+                    {this._render_profile()}
+                    {this._render_settings()}
+                </View>
+
+
+
             </View>
         );
     }
@@ -84,13 +119,13 @@ const styles = StyleSheet.create({
 
     avatar: {
         paddingHorizontal: 20,
-        backgroundColor: Theme.secondary_color,
+        backgroundColor: Theme.light_blue,
         justifyContent: "center"
     },
 
     welcome: {
         paddingHorizontal: 10,
-        backgroundColor: "#f5f5f5",
+        backgroundColor: Theme.light_blue,
         flex: 1,
         justifyContent: "center"
     },
@@ -115,5 +150,6 @@ const mapStateToProps = state => {
         user: state.auth.user
     }
 }
+
 
 export default connect(mapStateToProps)(Settings);

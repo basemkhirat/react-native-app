@@ -1,12 +1,14 @@
 import React from 'react';
-import {I18nManager, StatusBar} from 'react-native';
+import {StatusBar} from 'react-native';
 import {useScreens} from 'react-native-screens'
 import {persistor, store} from 'app/services/store';
 import Navigation from 'app/services/navigation';
 import {Provider} from 'react-redux';
-import {AppLoading, Updates} from "expo";
 import {PersistGate} from 'redux-persist/integration/react';
 import I18n from 'app/services/I18n';
+import Splash from "app/components/Splash";
+
+I18n.setLocale("ar");
 
 useScreens();
 
@@ -18,13 +20,6 @@ class App extends React.Component {
 
     boot() {
         return new Promise(resolve => {
-
-            I18n.setLocale(store.getState().app.locale);
-
-            if (store.getState().app.isRTL != I18nManager.isRTL) {
-                Updates.reload();
-            }
-
             resolve();
         });
     }
@@ -33,11 +28,15 @@ class App extends React.Component {
 
         if (!this.state.ready) {
             return (
-                <AppLoading
+                <Provider store={store}>
+                    <PersistGate persistor={persistor}>
+                <Splash
                     startAsync={this.boot}
                     onFinish={() => this.setState({ready: true})}
-                    onError={console.warn}
+                    onError={(error => console.warn(error))}
                 />
+                    </PersistGate>
+                </Provider>
             );
         }
 

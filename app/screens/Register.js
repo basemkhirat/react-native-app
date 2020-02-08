@@ -1,23 +1,38 @@
 import React from 'react';
-import {ActivityIndicator, Animated, Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
-import {Button, SnackBar, TextInput} from 'app/elements';
+import {
+    ActivityIndicator,
+    Animated,
+    SafeAreaView,
+    ScrollView,
+    StatusBar,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
+import {Button, Picker, SnackBar, TextInput} from 'app/elements';
 import styles from 'app/styles/auth';
 import I18n from 'app/services/I18n';
 import Resource from 'app/resources';
+import {connect} from 'react-redux';
 
-export default class Register extends React.Component {
+class Register extends React.Component {
 
     state = {
         loading: false,
         user: {
-            first_name: "",
-            last_name: "",
-            email: "",
-            password: ""
+            email: "basem@gmail.com",
+            password: "admin",
+            first_name: null,
+            university_id: null,
+            college_id: null,
+            year_id: null,
+            phone: null
         },
         error: null,
         form_translate_y: new Animated.Value(50),
-        brand_translate_y: new Animated.Value(-50)
+        brand_translate_y: new Animated.Value(-50),
+        colleges: [],
+        years: []
     }
 
     componentDidMount() {
@@ -35,100 +50,227 @@ export default class Register extends React.Component {
 
         this.setState({loading: true});
 
-        Resource.user.post("/", this.state.user)
-            .then(user => {
-                this.setState({error: null});
-                this.props.navigation.replace("Verify");
-            })
-            .catch(error => {
-                this.setState({error: error[0]});
-            })
-            .then(() => {
-                this.setState({loading: false});
-            });
+        Resource.auth.register(this.state.user).then(user => {
+            this.setState({error: null});
+            this.setState({loading: false});
+            this.props.navigation.replace("TabsNavigator");
+        }).catch(error => {
+            this.setState({loading: false});
+            this.setState({error});
+        });
 
+    }
+
+    loginByFacebook() {
+
+        alert("Not yet");
+        return;
+
+        Resource.auth.loginByFacebook().then(data => {
+            this.props.navigation.navigate("Universities");
+        }).catch(error => {
+            this.setState({error: error[0]});
+        })
+    }
+
+    loginByGoogle() {
+
+
+        alert("Not yet");
+        return;
+
+        Resource.auth.loginByGoogle().then(data => {
+            this.props.navigation.navigate("Universities");
+        }).catch(error => {
+            this.setState({error: error[0]});
+        })
+    }
+
+
+    setUser(key, value) {
+
+        let user = this.state.user;
+
+        user[key] = value;
+
+        this.setState(user);
+    }
+
+    getColleges(university_id) {
+
+        this.setUser("university_id", university_id);
+
+        Resource.college.get("/", {university_id}).then(colleges => {
+            this.setState({colleges: colleges.data});
+        });
+    }
+
+    getYears(college_id) {
+
+        this.setUser("college_id", college_id);
+
+        Resource.year.get("/", {college_id}).then(years => {
+            console.log(years.data);
+            this.setState({years: years.data});
+        });
     }
 
     render() {
 
+        let universities = this.props.universities.data;
+        let {colleges, years} = this.state;
+
         return (
 
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.wrapper}>
 
-                <Animated.View style={[styles.brand, {transform: [{translateY: this.state.brand_translate_y}]}]}>
+                <StatusBar barStyle="dark-content"/>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Home")}>
-                        <Image resizeMode="contain" style={styles.logo} source={require("app/assets/icon.png")}/>
-                    </TouchableOpacity>
+                <View style={styles.container}>
 
-                    <Text style={styles.title}> {I18n.t('register')} </Text>
-
-                </Animated.View>
-
-                <Animated.View style={[styles.form, {transform: [{translateY: this.state.form_translate_y}]}]}>
-
-                    <TextInput value={this.state.user.first_name}
-                               onChangeText={first_name => this.setState({
-                                   user: {
-                                       ...this.state.user,
-                                       first_name: first_name
-                                   }
-                               })}
-                               placeholder={I18n.t("first_name")}
-                               style={styles.input}
-                    />
-
-                    <TextInput value={this.state.user.last_name}
-                               onChangeText={last_name => this.setState({
-                                   user: {
-                                       ...this.state.user,
-                                       last_name: last_name
-                                   }
-                               })}
-                               placeholder={I18n.t("last_name")}
-                               style={styles.input}
-                    />
-
-                    <TextInput value={this.state.user.email}
-                               onChangeText={email => this.setState({user: {...this.state.user, email: email}})}
-                               placeholder="me@example.com"
-                               style={styles.input}
-                    />
-
-                    <TextInput value={this.state.user.password}
-                               onChangeText={password => this.setState({
-                                   user: {
-                                       ...this.state.user,
-                                       password: password
-                                   }
-                               })}
-                               placeholder={I18n.t("password")}
-                               secureTextEntry={true}
-                               style={styles.input}
-                    />
-
-                    <View style={styles.loading_button}>
-                        {this.state.loading ? <ActivityIndicator size="small" color="white"/> :
-                            <Button title={I18n.t('register_now')} style={styles.button} onPress={this.register.bind(this)}/>}
+                    <View style={styles.title}>
+                        <Text style={styles.title_text}>
+                            أنشي حساب جديد
+                        </Text>
                     </View>
 
-                    <View style={styles.links}>
-                        <TouchableOpacity onPress={() => this.props.navigation.replace("Forget")}>
-                            <Text style={styles.first}>{I18n.t("forget_password")}</Text>
-                        </TouchableOpacity>
+                    <View style={styles.social_buttons}>
 
-                        <TouchableOpacity onPress={() => this.props.navigation.replace("Login")}>
-                            <Text style={styles.second}>{I18n.t("already_have_account")}</Text>
-                        </TouchableOpacity>
+                        <Button style={styles.twitter_button} onPress={() => this.loginByFacebook()}>
+                            <Text style={styles.twitter_button_text}>Twitter</Text>
+                        </Button>
+
+                        <Button style={styles.google_button} onPress={() => this.loginByGoogle()}>
+                            <Text style={styles.google_button_text}>Google</Text>
+                        </Button>
+
                     </View>
 
-                </Animated.View>
+                    <View style={styles.form_separator}>
 
-                <SnackBar type="error" visible={this.state.error ? true : false}>
-                    {this.state.error}
-                </SnackBar>
+                        <View style={styles.form_separator_line}/>
+
+                        <View style={[styles.form_separator_text_wrapper]}>
+                            <Text style={styles.form_separator_text}>
+                                أو سجل
+                            </Text>
+                        </View>
+
+                    </View>
+
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}>
+
+                        <Animated.View style={[styles.form, {transform: [{translateY: this.state.form_translate_y}]}]}>
+
+                            <TextInput value={this.state.user.first_name}
+                                       onChangeText={first_name => this.setUser('first_name', first_name)}
+                                       placeholder={I18n.t("first_name")}
+                                       style={styles.input}
+                            />
+
+                            <TextInput value={this.state.user.email}
+                                       onChangeText={email => this.setUser('email', email)}
+                                       placeholder={I18n.t("email")}
+                                       style={styles.input}
+                            />
+
+                            <TextInput value={this.state.user.password}
+                                       onChangeText={password => this.setUser("password", password)}
+                                       placeholder={I18n.t("password")}
+                                       secureTextEntry={true}
+                                       style={styles.input}
+                            />
+
+                            <TextInput value={this.state.user.phone}
+                                       onChangeText={phone => this.setUser("phone", phone)}
+                                       placeholder={"رقم التليفون"}
+                                       style={styles.input}
+                            />
+
+                            <View style={styles.picker}>
+                                <Picker
+                                    style={{
+                                        inputAndroid: styles.picker_select_android,
+                                        inputIOS: styles.picker_select_ios
+                                    }}
+                                    placeholder={{label: "إختر الجامعة"}}
+                                    onValueChange={university_id => this.getColleges(university_id)}
+                                    items={universities.map(university => ({
+                                        label: university.name,
+                                        value: university.id
+                                    }))}/>
+                            </View>
+
+
+                            <View style={styles.picker}>
+                                <Picker
+                                    style={{
+                                        inputAndroid: styles.picker_select_android,
+                                        inputIOS: styles.picker_select_ios
+                                    }}
+                                    placeholder={{label: "إختر الكلية"}}
+                                    onValueChange={college_id => this.getYears(college_id)}
+                                    items={colleges.map(college => ({
+                                        label: college.name,
+                                        value: college.id
+                                    }))}/>
+                            </View>
+
+                            <View style={styles.picker}>
+                                <Picker
+                                    style={{
+                                        inputAndroid: styles.picker_select_android,
+                                        inputIOS: styles.picker_select_ios
+                                    }}
+                                    placeholder={{label: "إختر السنة الدراسية"}}
+                                    onValueChange={year_id => this.setUser("year_id", year_id)}
+                                    items={years.map(year => ({
+                                        label: year.name,
+                                        value: year.id
+                                    }))}/>
+                            </View>
+
+                            <View style={styles.loading_button}>
+                                {this.state.loading ? <ActivityIndicator size="small" color="blue"/> :
+                                    <Button title={I18n.t('login')} style={styles.button}
+                                            onPress={this.register.bind(this)}/>}
+                            </View>
+
+                        </Animated.View>
+
+                        <Animated.View style={[styles.form_extra]}>
+
+                            <View style={styles.links}>
+
+                                <TouchableOpacity onPress={() => this.props.navigation.replace("Login")}>
+                                    <Text style={styles.second}>{I18n.t("already_have_account")}</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </Animated.View>
+
+
+                    </ScrollView>
+
+                    <SnackBar type="error" visible={this.state.error ? true : false}>
+                        {this.state.error}
+                    </SnackBar>
+
+                </View>
+
 
             </SafeAreaView>
         );
     }
 }
+
+
+export default connect(state => {
+    return {
+        user: state.auth.user,
+        screen: state.app.screen,
+        universities: state.app.universities
+    }
+})(Register);

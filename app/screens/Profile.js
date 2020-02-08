@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Header, Right} from 'app/components/Header';
 import {connect} from 'react-redux';
 import I18n from 'app/services/I18n';
@@ -22,12 +22,6 @@ class Profile extends React.Component {
         error: null,
         message: null
     }
-
-    static navigationOptions = (nav) => {
-        return {
-            header: <Header {...nav} hasBack={true}/>
-        }
-    };
 
     componentDidMount() {
         this.getPermissionAsync();
@@ -75,7 +69,6 @@ class Profile extends React.Component {
     save() {
 
         this.setState({loading: true});
-
         this.setState({error: null});
         this.setState({message: null});
 
@@ -100,6 +93,8 @@ class Profile extends React.Component {
         return (
 
             <View style={styles.wrapper}>
+
+                <StatusBar barStyle="light-content"/>
 
                 <View style={styles.form_avatar_container}>
 
@@ -167,7 +162,7 @@ const styles = StyleSheet.create({
     },
 
     change_avatar_text: {
-        color: Theme.primary_color
+        color: Theme.light_blue
     },
 
     form_avatar_container: {

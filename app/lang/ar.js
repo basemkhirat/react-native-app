@@ -29,8 +29,10 @@ export default {
     push_notifications_not_granted: "الإشعارات غير مسموح بها",
     profile_saved: "تم حفظ البيانات",
     camera_roll_permission_needed: "غير مسموح بتصفح الإلبومات",
-    login_with_facebook: "تسجيل الدخول بالفيسبوك",
-    login_with_google: "تسجيل الدخول بجوجل",
-    or_login_with_email: "أو سجل الدخول ببريد إلكتروني مسجل"
+    login_with_facebook: "فيسبوك",
+    login_with_google: "جوجل",
+    or_login_with_email: "أو",
+
+    search_in_app: 'البحث في التطبيق'
 };
 

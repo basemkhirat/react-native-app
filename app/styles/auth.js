@@ -3,42 +3,57 @@ import {Theme} from "app/constants";
 
 export default StyleSheet.create({
 
+    wrapper: {
+        flex: 1
+    },
+
+    
+    
+    
     container: {
         flex: 1,
-        backgroundColor: Theme.primary_color,
-        alignItems: "center",
-        justifyContent: "center"
+        backgroundColor: "#ffffff",
+        alignItems: "stretch",
+        paddingHorizontal: 50
     },
 
     brand: {
-        flex: 2,
+        height: 250,
         justifyContent: "center",
         alignItems: "center"
     },
 
     logo: {
-        width: 100,
-        height: 100,
+        width: 256,
         borderRadius: 50,
-        marginVertical: 5
     },
 
     title: {
+        justifyContent: "center",
+
+        height: 100
+    },
+
+    title_text: {
         fontWeight: "bold",
-        color: "#ffffff",
-        fontSize: 18
+        color: Theme.black_color,
+        fontSize: 18,
+        textAlign: "center",
     },
 
     form: {
-        width: "85%",
-        flex: 3
+        marginVertical: 50
     },
 
     input: {
-        borderBottomWidth: 1,
-        borderBottomColor: "#cccccc",
-        color: "#cccccc",
-        marginVertical: 10
+        borderWidth: 1,
+        borderColor: "#cacad2",
+        color: "#cacad2",
+        marginVertical: 10,
+        borderRadius: 30,
+        padding: 20,
+        fontSize: 16,
+        textAlign: "right"
     },
 
     loading_button: {
@@ -47,88 +62,113 @@ export default StyleSheet.create({
     },
 
     button: {
-        marginVertical: 10,
-        height: 35,
-        borderRadius: 5,
-        backgroundColor: Theme.secondary_color,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 6,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 4
+        backgroundColor: Theme.light_blue,
+        color: "#ffffff"
+    },
+
+    form_extra: {
+
+        height: 200,
+        justifyContent: "space-between"
     },
 
     links: {
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "center",
     },
 
     first: {
-        color: Theme.secondary_color
+        color: "#a2a2a2",
+        marginHorizontal: 10
     },
 
     second: {
-        color: Theme.secondary_color
+        color: "#a2a2a2",
+        marginHorizontal: 10
     },
 
     error: {
         backgroundColor: "#800001",
         alignItems: "center",
         color: "blue",
-
     },
 
-    facebook_button: {
+    social_buttons: {
         flexDirection: "row",
-
-        backgroundColor: "#4267b2",
-        paddingVertical:5,
-        height: 40,
-        borderRadius: 5,
-        marginBottom: 10
+        justifyContent: "space-between"
     },
 
-    facebook_button_text: {
-        marginHorizontal: 10,
-        color: "#ffffff",
-        flex: 1,
-        textAlign: "center"
+    twitter_button: {
+        backgroundColor: "#1ca1f3",
+        width: "47%",
+        justifyContent: "center",
+        alignItems: "center"
     },
 
-    facebook_button_icon: {
-        color: "#ffffff",
-        marginHorizontal:10
+    twitter_button_text: {
+        color: "#ffffff"
     },
 
     google_button: {
-        flexDirection: "row",
-        justifyContent: "center",
         backgroundColor: "#db3e29",
-        paddingVertical:5,
-        height: 40,
-        borderRadius: 5,
-        marginBottom: 10
+        width: "47%",
+        justifyContent: "center",
+        alignItems: "center"
     },
 
     google_button_text: {
-        marginHorizontal: 10,
-        color: "#ffffff",
-        flex: 1,
-        textAlign: "center"
-    },
-
-    google_button_icon: {
-        color: "#ffffff",
-        marginHorizontal:10
+        color: "#ffffff"
     },
 
     form_separator: {
-        textAlign: "center",
-        color: "#f5f5f5",
+        color: "#cdccd5",
+        justifyContent: "center",
+        alignItems: "center",
         marginVertical: 20
+    },
+
+    form_separator_line: {
+        width: "100%",
+        borderColor: 1,
+        borderWidth: 1,
+        backgroundColor: "#cdccd5",
+        position: "absolute"
+    },
+
+    form_separator_text_wrapper: {
+        backgroundColor: "#cac9d1",
+       // width: 40,
+        minWidth: 37,
+        height: 40,
+        borderRadius: 100,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+    },
+
+    form_separator_text: {
+        color: "#ffffff"
+    },
+
+    picker: {
+        borderWidth: 1,
+        borderColor: "#cacad2",
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        borderRadius: 50,
+        textAlign: "right",
+        marginVertical:10
+    },
+
+    picker_select_android: {
+        backgroundColor: "white"
+    },
+
+    picker_select_ios: {
+        backgroundColor: "white",
+        textAlign: "right",
+        color: "#cacad2"
     }
 });
 

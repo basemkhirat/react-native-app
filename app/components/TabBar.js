@@ -1,11 +1,6 @@
 import React from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
-const S = StyleSheet.create({
-    container: {flexDirection: "row", height: 52, elevation: 2},
-    tabButton: {flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#cccccc"}
-});
-
 export default props => {
     const {
         renderIcon,
@@ -48,3 +43,17 @@ export default props => {
     );
 };
 
+
+const S = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        height: 52,
+        elevation: 2
+    },
+    tabButton: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#cccccc"
+    }
+});

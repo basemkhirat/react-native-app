@@ -38,20 +38,25 @@ export default class Resource {
     }
 
     promise(request) {
+
         return new Promise((resolve, reject) => {
 
-            request.then(response => {
+            return request.then(response => {
 
                 if (response) {
-                    if (response.data.success) {
+                    if (response.data.status) {
                         resolve(response.data.data);
                     }
                 }
 
             }).catch(error => {
-
                 if(error.response){
-                    reject(error.response.data.errors);
+                    if(error.response.status == 422){
+                        reject(error.response.data.errors[0]);
+                        //reject(Object.values(error.response.data.message)[0]);
+                    }else{
+                        reject(error.response.data.message);
+                    }
                 }else{
                     reject(error);
                 }

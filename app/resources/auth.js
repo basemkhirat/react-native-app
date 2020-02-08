@@ -21,10 +21,10 @@ export default class extends Resource {
 
         return new Promise((resolve, reject) => {
 
-            this.post("/token", user)
+            this.post("/login", user)
                 .then(data => {
 
-                    this.loginByToken(data.token).then(user => {
+                    this.loginByToken(data.access_token).then(user => {
                         resolve(user)
                     }).catch(error => {
                         reject(error);
@@ -38,6 +38,31 @@ export default class extends Resource {
         });
     }
 
+    /**
+     * Register a new user
+     * @param user
+     * @returns {Promise<any>}
+     */
+    register(user) {
+
+        return new Promise((resolve, reject) => {
+
+            this.post("/register", user)
+                .then(data => {
+
+                    this.loginByToken(data.access_token).then(user => {
+                        resolve(user)
+                    }).catch(error => {
+                        reject(error);
+                    })
+
+                })
+                .catch(error => {
+                    reject(error)
+                })
+
+        });
+    }
 
     /**
      * Login by token

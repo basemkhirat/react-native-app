@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "nor",
-    "slug": "nor",
+    "name": "Saudi MHA",
+    "slug": "saudi-mha",
     "privacy": "public",
     "sdkVersion": "34.0.0",
     "platforms": [
@@ -11,11 +11,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.png",
+    "icon": "./app/assets/splash.png",
     "splash": {
-      "image": "./app/assets/icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#2c205c"
+      "backgroundColor": "#1e3680"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,9 +22,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "online.smartech.mha",
+      "appStoreUrl": "https://apps.apple.com/us/app/facebook/id284882215"
+    },
+    "android": {
+      "package": "online.smartech.mha",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en"
     },
     "facebookAppId": "344988263051937",
-    "facebookDisplayName": "Nor"
+    "facebookDisplayName": "MHA"
   }
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import {I18nManager, Image, Platform, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Theme} from "app/constants";
-import {Ionicons} from '@expo/vector-icons'
+import {Ionicons} from '@expo/vector-icons';
+import Logo from 'app/components/icons/Logo';
 
 export const Item = (props) => {
 
@@ -10,7 +11,7 @@ export const Item = (props) => {
 
     return (
         <TouchableOpacity {...props} style={[styles.item, props.style]}>
-            <Ionicons name={icon} size={size} color={Theme.primary_color_inverse}/>
+            <Ionicons name={icon} size={size} color="#ffffff"/>
         </TouchableOpacity>
     );
 }
@@ -26,7 +27,6 @@ export const Left = (props) => {
 
 export const Right = (props) => {
 
-
     return (
         <View style={styles.right}>
             {props.children}
@@ -39,8 +39,8 @@ export const Center = (props) => {
     return (
         <View style={styles.center}>
             {props.children ? props.children :
-                <TouchableOpacity onPress={() => props.navigation.navigate("Home")}>
-                    <Image resizeMode="cover" style={{width: 50, height: 50}} source={require("app/assets/icon.png")}/>
+                <TouchableOpacity onPress={() => props.navigation.navigate("TabsNavigator")}>
+                    <Logo />
                 </TouchableOpacity>
             }
         </View>
@@ -52,6 +52,8 @@ export class Header extends React.Component {
     render() {
 
         let hasBack = this.props.hasBack;
+        hasBack = this.props.navigation.dangerouslyGetParent().state.index > 0
+
         let right = this.props.right;
         let left = this.props.left;
 
@@ -76,7 +78,7 @@ export class Header extends React.Component {
             RightComponent = right ? right : <Right {...this.props}/>;
         }
 
-        let CenterComponent = this.props.children ? this.props.children : <Center {...this.props}/>;
+        let CenterComponent = <Center {...this.props}/> ;
 
         return (
             <SafeAreaView style={styles.container}>
@@ -90,7 +92,7 @@ export class Header extends React.Component {
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: Theme.primary_color,
+        backgroundColor: Theme.dark_blue,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
 

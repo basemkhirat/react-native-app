@@ -1,89 +1,54 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {Button} from "app/elements";
+import {Text, TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
-import {store} from 'app/services/store';
-import {Updates} from 'expo';
-import {Header, Left, Right, Item} from 'app/components/Header';
-import RNPickerSelect from 'react-native-picker-select';
-
-import Resource from 'app/resources';
-
+import ICN from 'app/components/icons/icon';
+import {Icon, ScrollView} from 'app/elements';
+import SearchBar from "app/components/SearchBar";
+import styles from 'app/styles/page';
+import University from "app/components/cards/University";
 
 class Home extends React.Component {
 
     static navigationOptions = (nav) => {
-
-        let leftComponent = (
-            <Left>
-                <Item icon="ios-menu" onPress={() => nav.navigation.toggleDrawer()} />
-            </Left>
-        );
-
-        let RightComponent = (
-            <Right>
-                <Item icon="ios-settings" onPress={() => nav.navigation.navigate("Settings")}/>
-            </Right>
-        );
-
         return {
-            header: <Header {...nav} left={leftComponent} right={RightComponent}/>
+            tabBarLabel: "Home",
+            tabBarIcon: ({tintColor}) => {
+                return (
+                    <ICN color={tintColor}></ICN>
+                );
+            }
         }
     };
-
-    changeLocale(locale) {
-        store.dispatch({type: "locale", locale: locale});
-        Updates.reload();
-    }
-
-     facebook(){
-
-         Resource.auth.loginByFacebook().then(data => {
-             console.log(data);
-         }).catch(error => {
-             console.log(error);
-         })
-
-        // Resource.auth.loginByGoogle().then(data => {
-        //     console.log(data);
-        // }).catch(error => {
-        //     console.log(error);
-        // })
-    }
-
 
 
     render() {
 
+        let {navigation} = this.props;
+
         return (
-            <View>
+            <View style={styles.container}>
 
-                <Text onPress={this.facebook}>{ this.props.locale }</Text>
+                <View style={styles.search}>
+                    <SearchBar/>
+                </View>
 
+                <View style={styles.page}>
 
+                    <ScrollView style={styles.page}>
 
-                {/*<Button onPress={() => this.props.navigation.navigate("Posts")} title="Posts"/>*/}
+                        <View style={styles.boxes}>
 
-                {/*<Button title="en" onPress={() => this.changeLocale('en')}/>*/}
-                {/*<Button title="ar" onPress={() => this.changeLocale('ar')}/>*/}
+                            <Text>Home</Text>
 
-                {/*<Button title="Login now" onPress={() => this.props.navigation.navigate("Login")}/>*/}
+                        </View>
 
+                    </ScrollView>
 
+                </View>
 
             </View>
         );
-
-
     }
 }
 
-export default connect(state => {
-    return {
-        state: state,
-        user: state.auth.user,
-        token: state.auth.token,
-        locale: state.app.locale,
-        direction: state.app.direction
-    }
-})(Home);
+export default Home;

@@ -1,137 +1,70 @@
 import React from 'react';
-import {
-    createAppContainer,
-    createBottomTabNavigator,
-    createDrawerNavigator,
-    createStackNavigator
-} from 'react-navigation';
-import Home from "app/screens/Home";
+import {createAppContainer, createBottomTabNavigator, createStackNavigator} from 'react-navigation';
 import Settings from "app/screens/Settings";
-import MainSettings from "app/screens/MainSettings";
 import Profile from "app/screens/Profile";
-import Posts from "app/screens/Posts";
 import Login from "app/screens/Login";
 import Register from "app/screens/Register";
-import Verify from "app/screens/Verify";
-import Forget from "app/screens/Forget";
-import Reset from "app/screens/Reset";
-import {Ionicons} from "@expo/vector-icons";
-import {Theme} from 'app/constants';
-import Drawer from 'app/components/Drawer';
-import {I18nManager} from "react-native";
-
-
-const StackNavigationOptions = {
-    headerTintColor: "white",
-    headerStyle: {backgroundColor: Theme.primary_color}
-}
-
-const MainStackNavigator = createStackNavigator({
-        Home: Home,
-        Settings: Settings,
-        MainSettings: MainSettings,
-        Profile: Profile,
-    },
-    {
-        defaultNavigationOptions: {
-            ...StackNavigationOptions
-        }
-    });
-
+import Universities from "app/screens/Universities";
+import Colleges from "app/screens/Colleges";
+import Courses from "app/screens/Courses";
+import Enroll from "app/screens/Enroll";
+import Course from "app/screens/Course";
+import Video from "app/screens/Video";
+import About from "app/screens/About";
+import Materials from "app/screens/Materials";
+import {Theme} from "app/constants";
+import {Header} from 'app/components/Header';
 
 const TabsNavigator = createBottomTabNavigator({
-
-    Home: {
-        screen: MainStackNavigator,
-        navigationOptions: {
-            tabBarLabel: "Home",
-            tabBarIcon: ({tintColor}) => {
-                return <Ionicons name="md-laptop" size={25} color={tintColor}/>;
-            }
-        }
+    Universities: Universities,
+    MyCollege: {
+        screen: Materials,
+        params: {me: 1}
     },
-
-    xxx: createStackNavigator({
-        xxx: {
-            screen: Posts,
-            navigationOptions: {
-                ...StackNavigationOptions
-            }
-        }
-    }, {
-        navigationOptions: {
-            tabBarLabel: "Posts",
-            tabBarIcon: ({tintColor}) => {
-                return <Ionicons name="md-camera" size={25} color={tintColor}/>;
-            },
-
-        }
-    }),
+    MyCourses: {
+        screen: Courses,
+        params: {me: 1}
+    },
+    Settings: Settings
 }, {
-
     tabBarOptions: {
-        style: {backgroundColor: Theme.primary_color},
+        style: {
+            backgroundColor: Theme.dark_blue,
+            height: 80
+        },
         showLabel: false,
-        inactiveTintColor: Theme.inactive_Color,
-        activeTintColor: "white"
+        inactiveTintColor: "#ffffff",
+        activeTintColor: "#50e9f5"
     }
 });
 
-const MainAppNavigator = createStackNavigator({
-    Login,
-    Tabs: TabsNavigator,
+const MainStackNavigator = createStackNavigator({
 
-    Register,
-    Verify,
-    Forget,
-    Reset
+    Login: {
+        screen: Login,
+        navigationOptions: {header: null}
+    },
+    Register: {
+        screen: Register,
+        navigationOptions: {header: null}
+    },
+
+    Enroll: Enroll,
+    TabsNavigator: {screen: TabsNavigator},
+    Course: Course,
+    Video: Video,
+    Courses: Courses,
+    Profile: Profile,
+    Colleges: Colleges,
+    Materials: Materials,
+
+    About: About
 }, {
-    mode: "modal",
-    headerMode: "none"
-
-});
-
-const drawer = createDrawerNavigator({
-    Home: {
-        screen: MainAppNavigator,
-        navigationOptions: {
-            drawerLabel: "Home",
-            drawerIcon: ({tintColor}) => {
-                return <Ionicons name="md-laptop" size={25} color={tintColor}/>;
-            }
+    defaultNavigationOptions: nav => {
+        return {
+            header: <Header {...nav}/>
         }
     },
-    posts: {
-        screen: Posts,
-        navigationOptions: {
-            drawerLabel: "Posts",
-            drawerIcon: ({tintColor}) => {
-                return <Ionicons name="md-camera" size={25} color={tintColor}/>;
-            }
-        }
-    }
-}, {
-    drawerPosition: I18nManager.isRTL ? "right" : "left",
-    contentComponent: Drawer,
-    drawerBackgroundColor: "white",
-    drawerType: "slide",
-    hideStatusBar: false,
-    contentOptions: {
-        activeTintColor: 'white',
-        activeBackgroundColor: Theme.primary_color,
-        itemsContainerStyle: {
-            marginVertical: 0,
-            backgroundColor: "white",
-            flex: 1,
-            alignItems: "stretch",
-            height: "100%",
+});
 
-        },
-        iconContainerStyle: {
-            opacity: 0.4
-        }
-    }
-})
-
-
-export default createAppContainer(drawer);
+export default createAppContainer(MainStackNavigator);

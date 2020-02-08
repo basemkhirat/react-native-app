@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, SafeAreaView, Text, View} from 'react-native';
 import {Theme} from "app/constants";
 
 class SnackBar extends React.Component {
@@ -40,14 +40,14 @@ class SnackBar extends React.Component {
         }
 
         return (
-            <View style={styles.wrapper}>
+            <SafeAreaView style={styles.wrapper}>
                 <View {...this.props}
                       style={[this.props.style, default_container_style, {opacity: this.state.visible ? 1 : 0}]}>
                     <Text style={[this.props.textStyle, styles.text]}>
                         {this.props.children}
                     </Text>
                 </View>
-            </View>
+            </SafeAreaView>
 
         );
 
@@ -60,12 +60,15 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        bottom: 40,
-        width: "100%"
+        bottom: 0,
+        left: 20,
+        right: 20,
+        flex: 1,
+
     },
 
     container: {
-        width: "90%",
+        width: "100%",
         height: 40,
         justifyContent: "center",
         paddingHorizontal: 10,
